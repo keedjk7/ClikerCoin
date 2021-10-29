@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "675702380033",
+    "project_id": "clikercoin",
+    "storage_bucket": "clikercoin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675702380033:android:ab1a986e011fcf905c5200",
+        "android_client_info": {
+          "package_name": "com.example.clikercoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675702380033-eb7nipl5390pg6m9ar20seg6href2pfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD-13V2cmaWKQnOylEBFI4BXo0lsX2BNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675702380033-eb7nipl5390pg6m9ar20seg6href2pfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
