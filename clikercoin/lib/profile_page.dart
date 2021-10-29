@@ -1,15 +1,35 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
+
 import 'package:flutter/material.dart';
 
-class PrfilePage extends StatefulWidget {
-  const PrfilePage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _PrfilePageState createState() => _PrfilePageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _PrfilePageState extends State<PrfilePage> {
+class _ProfilePageState extends State<ProfilePage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.red,
+        currentIndex: currentIndex,
+        onTap: (value) {
+          print(value);
+          setState(() {
+            currentIndex = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.description_outlined), label: 'profile'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.monetization_on_outlined), label: 'cliker'),
+        ],
+      ),
+    );
   }
 }
