@@ -1,34 +1,37 @@
-// ignore_for_file: prefer_const_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, unused_field, avoid_print, unused_local_variable
 
+import 'package:clikercoin/database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:clikercoin/home_page.dart';
+import 'package:clikercoin/auth_page.dart';
+import 'package:clikercoin/database.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class RegistorPage extends StatefulWidget {
+  const RegistorPage({Key? key}) : super(key: key);
 
   @override
-  _AuthPageState createState() => _AuthPageState();
+  _RegistorPageState createState() => _RegistorPageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
-  late String id, _password;
+class _RegistorPageState extends State<RegistorPage> {
+  late String id, _password, _nameGame;
   final auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
-            "Login",
-            style: TextStyle(color: Colors.pinkAccent),
+            'Registor',
+            style: TextStyle(
+              color: Colors.pinkAccent,
+            ),
           ),
         ),
-        backgroundColor: Colors.lime,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center, //set center
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: EdgeInsets.all(12.0), //space from corner
@@ -54,11 +57,26 @@ class _AuthPageState extends State<AuthPage> {
                   });
                 }),
           ),
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                    labelText: "Name In Game", hintText: "Insert name game"),
+                onChanged: (value) {
+                  setState(() {
+                    _nameGame = value.trim();
+                  });
+                }),
+          ),
           ElevatedButton.icon(
               onPressed: () async {
                 try {
-                  await auth.createUserWithEmailAndPassword(
-                      email: id, password: _password);
+                  UserCredential result =
+                      await auth.createUserWithEmailAndPassword(
+                          email: id, password: _password);
+                  await DatabaseService(uid: result.user!.uid)
+                      .updateUserData(_nameGame, 0, 0, 0, 0, 0);
                   print("Register!");
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => HomePage()));
@@ -71,24 +89,6 @@ class _AuthPageState extends State<AuthPage> {
                 "Register",
                 style: TextStyle(fontSize: 24),
               )),
-          ElevatedButton.icon(
-            onPressed: () async {
-              try {
-                await auth.signInWithEmailAndPassword(
-                    email: id, password: _password);
-                print("Login!");
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()));
-              } on FirebaseAuthException catch (e) {
-                print(e.message);
-              }
-            },
-            icon: const Icon(Icons.login),
-            label: const Text(
-              "Login",
-              style: TextStyle(fontSize: 24),
-            ),
-          )
         ],
       ),
     );
