@@ -28,10 +28,10 @@ class _AuthPageState extends State<AuthPage> {
               title: Center(
                 child: Text(
                   "Login",
-                  style: TextStyle(color: Colors.pinkAccent),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              backgroundColor: Colors.lime,
+              backgroundColor: Colors.brown[400],
             ),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center, //set center
