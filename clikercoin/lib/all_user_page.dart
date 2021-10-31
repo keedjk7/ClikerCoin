@@ -1,27 +1,25 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
+// ignore_for_file: prefer_const_constructors, avoid_print, prefer_const_literals_to_create_immutables
 
-import 'package:clikercoin/all_user_page.dart';
 import 'package:clikercoin/brew.dart';
-import 'package:clikercoin/user_data_tile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:clikercoin/auth_page.dart';
 import 'package:clikercoin/database.dart';
+import 'package:clikercoin/profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'auth_page.dart';
 import 'brew_list.dart';
 import 'cliker_page.dart';
-import 'brew.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class AllUserPage extends StatefulWidget {
+  const AllUserPage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _AllUserPageState createState() => _AllUserPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  int currentIndex = 0;
+class _AllUserPageState extends State<AllUserPage> {
+  int currentIndex = 2;
   final auth = FirebaseAuth.instance;
   // List dataList = [];
 
@@ -55,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
-        body: UserDataTile(),
+        body: BrewList(),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.red,
           currentIndex: currentIndex,
@@ -63,18 +61,17 @@ class _ProfilePageState extends State<ProfilePage> {
             print(value);
             setState(() {
               currentIndex = value;
-              if (currentIndex == 1) {
+              if (currentIndex == 0) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => ProfilePage()));
+              } else if (currentIndex == 1) {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => ClikerPage()));
-              } else if (currentIndex == 2) {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => AllUserPage()));
               }
             });
           },
           items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.description_outlined), label: 'profile'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.monetization_on_outlined), label: 'cliker'),
             BottomNavigationBarItem(
@@ -84,23 +81,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
-  Widget buildItems(dataList) => ListView.separated(
-      padding: EdgeInsets.all(8),
-      itemCount: dataList.lenght,
-      separatorBuilder: (BuildContext context, int index) => Divider(),
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          child: Row(
-            children: [
-              Text(dataList["nameInGame"]),
-              Text(dataList["haveCoin"]),
-              Text(dataList["obtainCoin"]),
-              Text(dataList["begger"]),
-              Text(dataList["bussiessman"]),
-              Text(dataList["bussiessman"])
-            ],
-          ),
-        );
-      });
 }

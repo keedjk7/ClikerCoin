@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
+import 'package:clikercoin/all_user_page.dart';
+import 'package:clikercoin/botton_cliker.dart';
 import 'package:clikercoin/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'reset_confirm.dart';
@@ -54,26 +56,7 @@ class _ClikerPageState extends State<ClikerPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Container(
-                    width: 180,
-                    height: 180,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.monetization_on_outlined,
-                      size: 100,
-                      color: Colors.amber[700],
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(20),
-                    primary: Colors.amber[100],
-                    onPrimary: Colors.red[600],
-                  ),
-                ),
+                child: BottonCliker(),
               ),
             ],
           ),
@@ -90,6 +73,9 @@ class _ClikerPageState extends State<ClikerPage> {
             if (currentIndex == 0) {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => ProfilePage()));
+            } else if (currentIndex == 2) {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => AllUserPage()));
             }
           });
         },
@@ -98,6 +84,8 @@ class _ClikerPageState extends State<ClikerPage> {
               icon: Icon(Icons.description_outlined), label: 'profile'),
           BottomNavigationBarItem(
               icon: Icon(Icons.monetization_on_outlined), label: 'cliker'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.description_outlined), label: 'all user'),
         ],
       ),
     );
