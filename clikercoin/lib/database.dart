@@ -1,13 +1,15 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:clikercoin/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:clikercoin/brew.dart';
+import 'user.dart';
 
 class DatabaseService {
   final String uid;
   DatabaseService({required this.uid});
 
-  List brewsList = [];
+  //List brewsList = [];
 
   final CollectionReference brewCollection =
       FirebaseFirestore.instance.collection('brews');
@@ -24,18 +26,37 @@ class DatabaseService {
     });
   }
 
-  Future getData() async {
-    try {
-      await brewCollection.get().then((QuerySnapshot) {
-        for (var result in QuerySnapshot.docs) {
-          brewsList.add(result.data());
-        }
-      });
+  //brew list from snapshot
+  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Brew(
+          nameInGame: doc['nameInGame'] ?? '',
+          haveCoin: doc['haveCoin'] ?? 0,
+          obtainCoin: doc['obtainCoin'] ?? 0,
+          begger: doc['begger'] ?? 0,
+          bussiessman: doc['bussiessman'] ?? 0,
+          company: doc['company'] ?? 0);
+    }).toList();
+  }
 
-      return brewsList;
-    } catch (e) {
-      debugPrint("Error - $e");
-      return null;
-    }
+  //userData from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+        uid: uid,
+        haveCoin: snapshot['haveCoin'],
+        obtainCoin: snapshot['obtainCoin'],
+        begger: snapshot['begger'],
+        bussiessman: snapshot['bussiessman'],
+        company: snapshot['company']);
+  }
+
+  //get brews stream
+  Stream<List<Brew>> get brews {
+    return brewCollection.snapshots().map(_brewListFromSnapshot);
+  }
+
+  //get user doc stream
+  Stream<UserData> get userData {
+    return brewCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 }
