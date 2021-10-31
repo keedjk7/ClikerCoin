@@ -5,7 +5,7 @@ import 'package:clikercoin/database.dart';
 import 'package:clikercoin/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:clikercoin/home_page.dart';
+import 'package:clikercoin/loading.dart';
 import 'package:clikercoin/database.dart';
 
 class RegistorPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _RegistorPageState extends State<RegistorPage> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? HomePage()
+        ? Loading()
         : Scaffold(
             appBar: AppBar(
               leading: IconButton(
